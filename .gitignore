@@ -1,1 +1,13 @@
+# Ignore executable files
 *.exe
+
+# Ignore object files
+*.obj
+*.o
+
+# Ignore debug files
+*.pdb
+*.ilk
+
+# Ignore VS Code settings
+.vscode/
