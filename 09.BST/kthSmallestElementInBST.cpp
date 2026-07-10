@@ -5,8 +5,6 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-
-// Node class
 class Node {
 public:
     int val;
@@ -19,8 +17,6 @@ public:
         right = nullptr;
     }
 };
-
-// Insert into BST
 Node* insert(Node* root, int val) {
     if (root == nullptr)
         return new Node(val);
@@ -32,8 +28,6 @@ Node* insert(Node* root, int val) {
 
     return root;
 }
-
-// Inorder Traversal (for display)
 void displayInorder(Node* root) {
     if (!root)
         return;
@@ -43,7 +37,7 @@ void displayInorder(Node* root) {
     displayInorder(root->right);
 }
 
-// Same inorder function as LeetCode
+
 void inorder(Node* root, vector<int>& arr) {
     if (!root)
         return;
@@ -52,7 +46,6 @@ void inorder(Node* root, vector<int>& arr) {
     arr.push_back(root->val);
     inorder(root->right, arr);
 }
-
 // Find kth smallest element
 int kthSmallest(Node* root, int k) {
     vector<int> arr;

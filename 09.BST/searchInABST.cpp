@@ -3,8 +3,6 @@
 
 #include <iostream>
 using namespace std;
-
-// Node class
 class Node {
 public:
     int val;
@@ -17,8 +15,6 @@ public:
         right = nullptr;
     }
 };
-
-// Insert into BST
 Node* insert(Node* root, int val) {
     if (root == nullptr)
         return new Node(val);
@@ -43,8 +39,6 @@ Node* searchBST(Node* root, int val) {
     else
         return searchBST(root->right, val);
 }
-
-// Inorder Traversal
 void inorder(Node* root) {
     if (root == nullptr)
         return;

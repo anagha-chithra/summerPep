@@ -5,8 +5,6 @@
 
 #include <iostream>
 using namespace std;
-
-// Node class
 class Node {
 public:
     int val;
@@ -39,7 +37,7 @@ Node* insertIntoBST(Node* root, int val) {
     return root;
 }
 
-// Inorder Traversal
+
 void inorder(Node* root) {
     if (root == nullptr)
         return;
@@ -48,7 +46,6 @@ void inorder(Node* root) {
     cout << root->val << " ";
     inorder(root->right);
 }
-
 int main() {
     Node* root = nullptr;
 
