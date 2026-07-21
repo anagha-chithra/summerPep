@@ -1,31 +1,43 @@
 @echo off
-echo ===============================
-echo      Git Auto Push
-echo ===============================
+cd /d "%~dp0"
 
-git add .
+echo =====================================
+echo         DSA GitHub Auto Push
+echo =====================================
+echo.
 
+git status
+
+echo.
 set /p msg=Enter commit message:
 
+if "%msg%"=="" (
+    echo Commit message cannot be empty.
+    pause
+    exit
+)
+
+git add .
 git commit -m "%msg%"
 
 echo.
-echo Pulling latest changes...
+echo Syncing with GitHub...
 git pull --rebase origin main
 
 if errorlevel 1 (
     echo.
-    echo Rebase failed. Resolve the issue and try again.
+    echo Rebase failed. Resolve conflicts, then run:
+    echo git rebase --continue
     pause
-    exit /b
+    exit
 )
 
 echo.
 echo Pushing to GitHub...
-git push origin main
+git push
 
 echo.
-echo ===============================
-echo      Done!
-echo ===============================
+echo =====================================
+echo Successfully pushed to GitHub!
+echo =====================================
 pause
