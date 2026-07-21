@@ -8,6 +8,17 @@ echo.
 
 git status
 
+git diff --quiet
+if %errorlevel%==0 (
+    git diff --cached --quiet
+    if %errorlevel%==0 (
+        echo.
+        echo No changes to commit.
+        pause
+        exit
+    )
+)
+
 echo.
 set /p msg=Enter commit message:
 
@@ -25,8 +36,7 @@ echo Syncing with GitHub...
 git pull --rebase origin main
 
 if errorlevel 1 (
-    echo.
-    echo Rebase failed. Resolve conflicts, then run:
+    echo Rebase failed. Resolve conflicts and run:
     echo git rebase --continue
     pause
     exit
