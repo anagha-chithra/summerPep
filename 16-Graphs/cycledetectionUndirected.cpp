@@ -5,25 +5,20 @@ class Solution {
 private:
     bool hasCycle(int src, int parent, vector<bool> &vis, vector<vector<int>> &graph)
     {
-        queue<pair<int, int>> q;
-        q.push({src, parent});
         vis[src] = 1;
 
-        while (!q.empty())
+        for (int &neighbourNode : graph[src])
         {
-            src = q.front().first;
-            parent = q.front().second;
-            q.pop();
-
-            for (int &neighbourNode : graph[src])
+            if (!vis[neighbourNode])
             {
-                if (!vis[neighbourNode])
+                if (hasCycle(neighbourNode, src, vis, graph))
                 {
-                    vis[neighbourNode] = 1;
-                    q.push({neighbourNode, src});
-                }
-                else if (neighbourNode != parent)
                     return 1;
+                }
+            }
+            else if (neighbourNode != parent)
+            {
+                return 1;
             }
         }
 
@@ -43,16 +38,18 @@ public:
 
         vector<bool> vis(V, 0);
 
-        for (int i = 0; i < V; i++)
+        for (int v = 0; v < V; v++)
         {
-            if (!vis[i])
+            if (!vis[v])
             {
-                if (hasCycle(i, -1, vis, graph))
-                    return true;
+                if (hasCycle(v, -1, vis, graph))
+                {
+                    return 1;
+                }
             }
         }
 
-        return false;
+        return 0;
     }
 };
 
@@ -64,7 +61,9 @@ int main()
     vector<vector<int>> edges(E, vector<int>(2));
 
     for (int i = 0; i < E; i++)
+    {
         cin >> edges[i][0] >> edges[i][1];
+    }
 
     Solution obj;
 
