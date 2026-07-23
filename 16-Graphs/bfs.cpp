@@ -1,74 +1,40 @@
-#include <iostream>
-#include <vector>
-#include <queue>
+#include<bits/stdc++.h>
 using namespace std;
-
-class Graph {
-    int V;
-    vector<vector<int>> adj;
-
-public:
-    Graph(int vertices) {
-        V = vertices;
-        adj.resize(V);
-    }
-
-    void addEdge(int u, int v) {
-        adj[u].push_back(v);
-        adj[v].push_back(u);  
-    }
-
-
-    void BFS(int start) {
-        vector<bool> visited(V, false);
-        queue<int> q;
-
-        visited[start] = true;
-        q.push(start);
-
-        cout << "BFS Traversal: ";
-
-        while (!q.empty()) {
-            int node = q.front();
-            q.pop();
-
-            cout << node << " ";
-
-            for (int neighbor : adj[node]) {
-                if (!visited[neighbor]) {
-                    visited[neighbor] = true;
-                    q.push(neighbor);
-                }
+void addEdge(vector<int>adj[],int start,int end){
+    adj[start].push_back(end);
+    adj[end].push_back(start);
+}
+vector<int>bfs(vector<int>adj[],int V){
+    vector<bool>visited(V,false);
+    vector<int>ans;
+    queue<int>q;
+    int src=0;
+    visited[src]=true;
+    q.push(src);
+    while(!q.empty()){
+        int curr=q.front();
+        q.pop();
+        ans.push_back(curr);
+        for(int j=0;j<adj[curr].size();j++){
+            if(!visited[adj[curr][j]]){
+                visited[adj[curr][j]]=true;
+                q.push(adj[curr][j]);
             }
         }
-
-        cout << endl;
     }
-};
-
-int main() {
-    int V, E;
-
-    cout << "Enter number of vertices: ";
-    cin >> V;
-
-    Graph g(V);
-
-    cout << "Enter number of edges: ";
-    cin >> E;
-
-    cout << "Enter the edges (u v):\n";
-    for (int i = 0; i < E; i++) {
-        int u, v;
-        cin >> u >> v;
-        g.addEdge(u, v);
+    return ans;
+}
+int main(){
+    int V,E;
+    cin>>V>>E;
+    vector<int>adj[V];
+    for(int i=0;i<E;i++){
+        int u,v;
+        cin>>u>>v;
+        addEdge(adj,u,v);
     }
-
-    int start;
-    cout << "Enter starting vertex: ";
-    cin >> start;
-
-    g.BFS(start);
-
-    return 0;
+    vector<int>ans=bfs(adj,V);
+    for(int x:ans){
+        cout<<x<<" ";
+    }
 }
