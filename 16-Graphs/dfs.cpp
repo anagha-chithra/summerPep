@@ -1,65 +1,46 @@
-#include <iostream>
-#include <vector>
+#include<bits/stdc++.h>
 using namespace std;
-
-class Graph {
-    int V;
-    vector<vector<int>> adj;
-
-public:
-    Graph(int vertices) {
-        V = vertices;
-        adj.resize(V);
+void addEdge(vector<int>adj[],int start,int end){
+    adj[start].push_back(end);
+    adj[end].push_back(start);
+}
+void displayGraph(vector<int>adj[],int V){
+    for(int i=0;i<V;i++){
+        cout<<i<<" -> ";
+        for(int j=0;j<adj[i].size();j++){
+            cout<<adj[i][j]<<" ";
+        }
+        cout<<endl;
     }
-
-    void addEdge(int u, int v) {
-        adj[u].push_back(v);
-        adj[v].push_back(u); 
-    }
-
-    void dfs(int node, vector<bool>& visited) {
-        visited[node] = true;
-        cout << node << " ";
-
-        for (int neighbor : adj[node]) {
-            if (!visited[neighbor]) {
-                dfs(neighbor, visited);
-            }
+}
+void dfs(vector<int>adj[],vector<bool>&visited,vector<int>&res,int src){
+    visited[src]=true;
+    res.push_back(src);
+    for(int x:adj[src]){
+        if(!visited[x]){
+            dfs(adj,visited,res,x);
         }
     }
-
-    void DFS(int start) {
-        vector<bool> visited(V, false);
-
-        cout << "DFS Traversal: ";
-        dfs(start, visited);
-        cout << endl;
+}
+vector<int>dfsTraversal(vector<int>adj[],int V){
+    vector<bool>visited(V,false);
+    vector<int>res;
+    dfs(adj,visited,res,0);
+    return res;
+}
+int main(){
+    int V,E;
+    cin>>V>>E;
+    vector<int>adj[V];
+    for(int i=0;i<E;i++){
+        int u,v;
+        cin>>u>>v;
+        addEdge(adj,u,v);
     }
-};
-
-int main() {
-    int V, E;
-
-    cout << "Enter number of vertices: ";
-    cin >> V;
-
-    Graph g(V);
-
-    cout << "Enter number of edges: ";
-    cin >> E;
-
-    cout << "Enter the edges (u v):\n";
-    for (int i = 0; i < E; i++) {
-        int u, v;
-        cin >> u >> v;
-        g.addEdge(u, v);
+    displayGraph(adj,V);
+    vector<int>ans=dfsTraversal(adj,V);
+    for(int x:ans){
+        cout<<x<<" ";
     }
-
-    int start;
-    cout << "Enter starting vertex: ";
-    cin >> start;
-
-    g.DFS(start);
-
     return 0;
 }
